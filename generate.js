@@ -14,7 +14,7 @@ if (!fs.existsSync(projectFolder)) {
   console.log("Project not found! Creating new...");
   fs.mkdirSync(projectFolder);
   const serviceContent = fs
-    .readFileSync(path.resolve(__dirname, "templates", "serivce.yaml"))
+    .readFileSync(path.resolve(__dirname, "templates", "service.yaml"))
     .toString()
     .replace("{{ project }}", project);
   fs.writeFileSync(
