@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: hello-app-fe-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-app-fe
+  template:
+    metadata:
+      labels:
+        app: hello-app-fe
+    spec:
+      containers:
+        - name: hello-app-fe
+          image: longthanhle1122/hello-app-fe:{{ run_id }}
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080

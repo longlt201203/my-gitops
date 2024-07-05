@@ -13,6 +13,8 @@ on:
         options:
           - numerology-api
           - numerology-fe
+          - hello-app-api
+          - hello-app-fe
 
 jobs:
   generate-k8s-manifest:
