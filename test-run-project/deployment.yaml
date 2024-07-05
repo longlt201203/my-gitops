@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: test-run-project-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ project }}
+  template:
+    metadata:
+      labels:
+        app: {{ project }}
+    spec:
+      containers:
+        - name: {{ project }}
+          image: longthanhle1122/{{ project }}:test-run
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80
