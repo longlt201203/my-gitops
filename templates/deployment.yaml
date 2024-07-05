@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: {{ project }}-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ project }}
+  template:
+    metadata:
+      labels:
+        app: {{ project }}
+    spec:
+      containers:
+        - name: {{ project }}
+          image: {{ registry }}/{{ project }}:{{ run_id }}
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80
