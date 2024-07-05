@@ -1,0 +1,39 @@
+name: My GitOps CI
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Run ID
+        required: true
+        type: string
+      project:
+        description: Project
+        required: true
+        type: choice
+        options:
+          - numerology-api
+          - numerology-fe
+
+jobs:
+  generate-k8s-manifest:
+    runs-on: ubuntu-latest
+    container: node:20
+    steps:
+      - name: Check run ID
+        run: |
+          echo "Running on \"${{ inputs.project }}\" project with ID: ${{ inputs.run_id }}"
+      - name: Checkout to the source code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT }}
+      - name: Generate K8S Manifest Files
+        run: |
+          node ./k8s/generate ${{ inputs.project }} ${{ inputs.run_id }}
+      - name: Update new change to repository
+        run: |
+          git config --global safe.directory '*'
+          git config --global user.name = 'Le Thanh Long'
+          git config --global user.email = 'longlt201203@gmail.com'
+          git add .
+          git commit -m "Update K8S File for \"${{ inputs.project }}\" with ID: ${{ inputs.run_id }}"
+          git push

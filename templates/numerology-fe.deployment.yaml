@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: numerology-fe-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: numerology-fe
+  template:
+    metadata:
+      labels:
+        app: numerology-fe
+    spec:
+      containers:
+        - name: numerology-fe
+          image: longthanhle1122/numerology-fe:{{ run_id }}
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80
