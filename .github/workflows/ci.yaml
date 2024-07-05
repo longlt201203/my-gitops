@@ -9,12 +9,7 @@ on:
       project:
         description: Project
         required: true
-        type: choice
-        options:
-          - numerology-api
-          - numerology-fe
-          - hello-app-api
-          - hello-app-fe
+        type: string
 
 jobs:
   generate-k8s-manifest:
