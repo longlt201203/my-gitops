@@ -2,7 +2,7 @@ console.log("Calling generate function with parameters:", process.argv);
 
 const project = process.argv[2];
 const runId = process.argv[3];
-const registry = process.argv[4] || "longthanhle1122";
+const registry = process.argv[4];
 
 const fs = require("fs");
 const path = require("path");
@@ -16,7 +16,7 @@ if (!fs.existsSync(projectFolder)) {
   const serviceContent = fs
     .readFileSync(path.resolve(__dirname, "templates", "service.yaml"))
     .toString()
-    .replace("{{ project }}", project);
+    .replaceAll("{{ project }}", project);
   fs.writeFileSync(
     path.resolve(__dirname, project, "service.yaml"),
     serviceContent
@@ -24,8 +24,8 @@ if (!fs.existsSync(projectFolder)) {
   const deploymentTemplateContent = fs
     .readFileSync(path.resolve(__dirname, "templates", "deployment.yaml"))
     .toString()
-    .replace("{{ project }}", project)
-    .replace("{{ registry }}", registry);
+    .replaceAll("{{ project }}", project)
+    .replaceAll("{{ registry }}", registry);
   fs.writeFileSync(
     path.resolve(__dirname, "templates", `${project}.deployment.yaml`),
     deploymentTemplateContent
@@ -41,7 +41,7 @@ const deploymentContent = fs
     path.resolve(__dirname, "templates", `${project}.deployment.yaml`)
   )
   .toString()
-  .replace("{{ run_id }}", runId);
+  .replaceAll("{{ run_id }}", runId);
 
 console.log("Writing output to deployment.yaml file...");
 fs.writeFileSync(

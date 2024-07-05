@@ -10,6 +10,11 @@ on:
         description: Project
         required: true
         type: string
+      registry:
+        description: Docker Registry / Username
+        required: true
+        type: string
+        default: longthanhle1122
 
 jobs:
   generate-k8s-manifest:
